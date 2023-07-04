@@ -1,7 +1,8 @@
 <?php
+namespace tmatsumor\slack_api_php;
 require_once(__DIR__.'/http-requests-php/http_requests.php');
 
-class SlackAPI extends HttpRequests
+class SlackAPI extends \tmatsumor\http_requests_php\HttpRequests
 {
     const SLACK_URL = 'https://slack.com/api/';
     const TMP_IMG_PATH = '/var/tmp/image_for_slack_api_php';
