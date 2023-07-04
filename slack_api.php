@@ -1,10 +1,10 @@
 <?php
-require_once('http-requests-php/http_requests.php');
+require_once(__DIR__.'/http-requests-php/http_requests.php');
 
 class SlackAPI extends HttpRequests
 {
     const SLACK_URL = 'https://slack.com/api/';
-    const TMP_IMG_PATH = '/var/tmp/image_for_slack_api_php.png';
+    const TMP_IMG_PATH = '/var/tmp/image_for_slack_api_php';
     private $token;
 
     public function __construct($auth_token) {
