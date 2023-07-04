@@ -1,6 +1,8 @@
 <?php
 namespace tmatsumor\slack_api_php;
-require_once(__DIR__.'/http-requests-php/http_requests.php');
+if(!class_exists('\tmatsumor\http_requests_php\HttpRequests')){
+    require_once(__DIR__.'/http_requests_php/http_requests.php');
+}
 
 class SlackAPI extends \tmatsumor\http_requests_php\HttpRequests
 {
@@ -24,7 +26,7 @@ class SlackAPI extends \tmatsumor\http_requests_php\HttpRequests
     public function fileUpload($channel, $text, $imgurl) {
         file_put_contents(self::TMP_IMG_PATH, file_get_contents($imgurl)); // store image file once
         $mime = getimagesize(self::TMP_IMG_PATH)['mime'];
-        $file = new CurlFile(self::TMP_IMG_PATH, $mime,                  // create curl file object
+        $file = new \CurlFile(self::TMP_IMG_PATH, $mime,                  // create curl file object
                     date('Ymd_His').'.'.str_replace('image/', '', $mime));    // file name: Ymd_His
         $p = [
             'token'    => $this->token,
