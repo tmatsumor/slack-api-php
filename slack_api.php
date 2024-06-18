@@ -26,7 +26,7 @@ class SlackAPI extends \tmatsumor\http_requests_php\HttpRequests
     public function fileUpload($channel, $text, $imgurl) {
         file_put_contents(self::TMP_IMG_PATH, file_get_contents($imgurl)); // store image file once
         $mime = getimagesize(self::TMP_IMG_PATH)['mime'];
-        $file = new \CurlFile(self::TMP_IMG_PATH, $mime,                  // create curl file object
+        $file = new \CurlFile(self::TMP_IMG_PATH, $mime,                 // create curl file object
                     date('Ymd_His').'.'.str_replace('image/', '', $mime));    // file name: Ymd_His
         $p = [
             'token'    => $this->token,
@@ -35,6 +35,8 @@ class SlackAPI extends \tmatsumor\http_requests_php\HttpRequests
             'title'    => '　',                                    // hide its file title of a post
             'initial_comment' => $text
         ];
-        return $this->post(self::SLACK_URL.'files.upload', $p);
+        $res = $this->post(self::SLACK_URL.'files.upload', $p);
+        unlink(self::TMP_IMG_PATH);        // remove image file in tmp directory after slack upload
+        return $res;
     }
 }
